@@ -1,25 +1,23 @@
-class Library {
-  constructor (name, creator) {
+function Library (name, creator) {
     this.name = name
     this.creator = creator
     this.playlists = []
   }
-  addPlaylists(playlist) {
-    this.playlists.push(playlist)
-  }
-}
 
-class Playlist {
-  constructor (name) {
+  Library.prototype.addPlaylists = function (playlist) {
+    this.playlists.push(playlist)
+};
+
+function Playlist (name) {
     this.name = name
     this.tracks = []
   }
 
-  addTracks(track) {
+  Playlist.prototype.addTracks = function (track) {
     this.tracks.push(track);
   }
   
-  overallRating() {
+  Playlist.prototype.overallRating = function () {
     let ratingsTotal = 0;
     let ratingsLength = this.tracks.length;
     
@@ -30,7 +28,7 @@ class Playlist {
   return `The overall rating is: ${avgRating}`;
   }
 
-  totalDuration() {
+  Playlist.prototype.totalDuration = function () {
     let durationTotalInSeconds = 0;
     let durationLength = this.tracks.length;
     
@@ -40,13 +38,21 @@ class Playlist {
     let durationInMinutes = Math.floor(durationTotalInSeconds / 60)
     return `The duration is ${durationInMinutes} minutes`;
   }
+
+
+function Track (title, rating, lengthInSeconds) {
+    this.title = title
+    this.rating = validateRating(rating);
+    this.lengthInSeconds = lengthInSeconds
 }
 
-class Track {
-  constructor(title, rating, lengthInSeconds) {
-    this.title = title
-    this.rating = rating
-    this.lengthInSeconds = lengthInSeconds
+let validateRating = function (rating) {
+  if (rating >= 0 && rating <= 5) {
+    return rating
+  } else {
+    console.log(`Please enter a valid rating. Rating defaulted to 0`);
+    return 0;
+    
   }
 }
 
@@ -56,7 +62,7 @@ let lib = new Library('Cool songs', 'Govind');
 let playlist1 = new Playlist('My songs')
 // console.log(playlist1)
 
-let track1 = new Track('Song', 4, 120);
+let track1 = new Track('Song', 9, 120);
 // console.log(track1)
 
 let track2 = new Track('song2', 3, 240);
